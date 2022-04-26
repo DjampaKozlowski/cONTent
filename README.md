@@ -13,7 +13,12 @@ NB : This script entirely rely on Wouter De Coster's work and especially on the 
 
 ## Installation 
 
-The following lines will:
+Clone the repository in the desired location
+```
+git clone git@github.com:DjampaKozlowski/cONTent.git
+```
+
+Then, exectute the following lines. These lines will :
 - create a python 3.10.4 conda environment named 'content_env'
 - activate the 'content_env'
 - install the required dependencies and set the enviroment as follow : biopython==1.79, certifi==2021.10.8, nanoget==1.16.1, numpy==1.22.3, pandas==1.4.2, pysam==0.19.0, python-dateutil==2.8.2, pytz==2022.1, six==1.16.0 .
