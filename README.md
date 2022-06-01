@@ -3,7 +3,7 @@
 ## Description
 
 cONTent parse a read library (fastq/fastq.gz) and for each read extract the read's :
-- name
+- name/ID
 - length
 - average quality. 
 
