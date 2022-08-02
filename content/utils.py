@@ -1,3 +1,4 @@
+import os
 import multiprocessing
 
 def manage_cpus(nb_wanted_cpus):
@@ -24,4 +25,33 @@ def manage_cpus(nb_wanted_cpus):
     else:
         nb_cpu_to_use = nb_wanted_cpus
     return nb_cpu_to_use
+
+
+def lst_files_in_dir(dpath, ext=None):
+    """
+    List files in a directory and return a list of file paths. 
+    
+    Optional : a file extension can be specified. If so, only files with such
+    extension will be outputed. NB : Extension is case sensitive.
+    
+    Parameters :
+    ------------
+    dpath (str) -- directory path
+    
+    Returns :
+    ---------
+    (list) -- list of files paths.
+    """
+    lst_fpath = []
+    if ext:
+        for f in os.scandir(dpath):
+            if f.is_file():
+                if f.name.endswith(ext):
+                    lst_fpath.append(f.path)        
+    else:
+        for f in os.scandir(dpath):
+            if f.is_file():
+                lst_fpath.append(f.path)
+    return lst_fpath
+
 
