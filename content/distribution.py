@@ -52,11 +52,14 @@ def main(args):
     for fpath in lst_fpath:
         ## Read the .content file
         df = pd.read_csv(fpath, sep='\t')
+        print('df size before:', df.shape[0])
         ## Add the origin information
         lib_name = os.path.splitext(os.path.basename(fpath))[0]
         df['library'] = lib_name
         ## Sub-sample the file
         df = sub_sample_reads(df, args.fraction)
+        print('df size after:', df.shape[0])
+
         ## Add the df to the list for further concatenation
         lst_df.append(df)
         ## Create a plot for each lib
@@ -66,10 +69,19 @@ def main(args):
             title=lib_name)
         ind_distrib_plot.create_graph()
         ind_distrib_plot.save_graph()
+        ## Save basic stats about reads' length and quality (individual)
+        df[['read_length', 'read_avg_quality']]\
+            .describe()\
+                .to_csv(
+                    os.path.join(ind_outdir_path, 
+                                 f'ReadsDistribution_basic_stats{lib_name}.tsv'
+                                 ),
+                    sep='\t'
+                )
     
     ### Create a global dataframe from all the libraries
     #  
-    df_glob = pd.concat(lst_df)
+    df_glob = pd.concat(lst_df).reset_index(drop=True)    
     
     ### Generate a global plot over all the input libraries
     #
@@ -80,3 +92,12 @@ def main(args):
         )
     glob_distrib_plot.create_graph()
     glob_distrib_plot.save_graph()
+    
+    ### Save basic stats about reads' length and quality (global)
+    df_glob[['read_length', 'read_avg_quality']]\
+    .describe()\
+        .to_csv(
+            os.path.join(args.outdir, 
+                         f'ReadsDistribution_basic_stats{args.prefix}.tsv'),
+            sep='\t'
+        )

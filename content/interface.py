@@ -76,9 +76,9 @@ def arguments_parser():
                         help="""fraction of reads to subsample per analysed 
                         library (distribution plot only). The more important 
                         is the fraction, the most time consuming the analysis 
-                        will be. (default : 0.0001)""",
+                        will be. (default : 0.01)""",
                         type=float,
-                        default=0.0001)
+                        default=0.01)
     
     
     
