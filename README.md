@@ -48,3 +48,11 @@ where:
 - < INPUTFILEPATH > : input fastq/fastq.gz file path [mendatory]
 - < OUTPUTFILEPATH > : output tsv file path [mendatory]
 - < THREADS > : number of parallels workers. Is set to the maximum of available CPUs if <= 0 or if > to the maximum of available CPUs. [default : 1]. 
+
+
+
+### cONTent.py coverage 
+
+The output table only display rows for which the coverage obtained with these values of minimal reads' length and quality satisfies the required coverage.
+
+Explain the outputs (plot and dataframe)

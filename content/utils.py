@@ -47,11 +47,11 @@ def lst_files_in_dir(dpath, ext=None):
         for f in os.scandir(dpath):
             if f.is_file():
                 if f.name.endswith(ext):
-                    lst_fpath.append(f.path)        
+                    lst_fpath.append(os.path.abspath(f.path))        
     else:
         for f in os.scandir(dpath):
             if f.is_file():
-                lst_fpath.append(f.path)
+                lst_fpath.append(os.path.abspath(f.path))
     return lst_fpath
 
 

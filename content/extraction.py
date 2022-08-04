@@ -1,6 +1,9 @@
 
+import os
 import pandas as pd
 import nanoget.extraction_functions as nef
+import content.utils as utls
+
 
 
 def extract_infos_from_fastq(fpath, threads):
@@ -26,3 +29,41 @@ def extract_infos_from_fastq(fpath, threads):
                                               'read_avg_quality', 
                                               'other'])\
                                                   .drop(columns='other')
+                                                  
+
+
+def main(args):
+    ### Set the input/ouput paths
+    #
+    input_fpath = os.path.abspath(args.inputfilepath)
+    output_dir = os.path.abspath(args.outputdirpath)
+
+    ### Set the number of CPUs to use
+    #
+    nb_cpu = utls.manage_cpus(args.threads)
+    
+    ### Parse fastq file
+    #
+    df = extract_infos_from_fastq(input_fpath, 
+                                  nb_cpu)
+    
+    ### Create the output directory tree as well as a sub-dir named 'individual 
+    #   where per-lib results will be stored
+    #   NB : existing files/directories will be overwritten.
+    #
+    os.makedirs(output_dir, 
+                mode=0o755, 
+                exist_ok=True)
+    
+    
+    ### Save the results in a tab separated values file.
+    #
+    output_fpath = os.path.join(
+        output_dir,
+        os.path.splitext(os.path.basename(input_fpath))[0]+'.content')
+    
+    print(output_fpath)
+    df.to_csv(output_fpath, 
+              sep='\t',
+              header=True,
+              index=False)  
