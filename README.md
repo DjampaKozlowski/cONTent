@@ -32,7 +32,9 @@ cd cONTent/
 pip install -e .
 ```
 
-## Usage 
+## cONTent.py usage 
+
+### extract
 
 Activate the environment (if not already done)
 
@@ -49,9 +51,9 @@ where:
 - < OUTPUTFILEPATH > : output tsv file path [mendatory]
 - < THREADS > : number of parallels workers. Is set to the maximum of available CPUs if <= 0 or if > to the maximum of available CPUs. [default : 1]. 
 
+### distrib
 
-
-### cONTent.py coverage 
+###  coverage
 
 The output table only display rows for which the coverage obtained with these values of minimal reads' length and quality satisfies the required coverage.
 
