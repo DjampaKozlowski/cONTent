@@ -1,8 +1,6 @@
 import sys
 import os
 
-import matplotlib.pyplot as plt
-import seaborn as sns
 import pandas as pd
 import numpy as np
 sns.set_style("white")
@@ -109,8 +107,7 @@ def main(args):
         print("No .content file found at the given adress. Program will end")
         sys.exit()
     
-    ### Create the output directory tree as well as a sub-dir named 'individual 
-    #   where per-lib results will be stored
+    ### Create the output directory tree 
     #   NB : existing files/directories will be overwritten.
     #
     os.makedirs(args.outdir, 
@@ -142,7 +139,7 @@ def main(args):
     
     ### Create and save the optimization plot (global dataframe)
     #
-    plot_coverage = grph.PlotCoverageTradeoff(
+    plot_coverage = grph.CoveragePlot(
         os.path.join(args.outdir, f'Coverage_{args.prefix}.pdf'),
         df_coverage,
         title=args.prefix,

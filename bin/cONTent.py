@@ -7,9 +7,8 @@ if __name__ == '__main__':
         import content.extraction as xtrct
         xtrct.main(args)
     elif args.sub_prog == 'distrib':
-        import content.content_distribution as dstrb
-        # dstrb.main(args)
-        print("tutu")
+        import content.distribution as dstrb
+        dstrb.main(args)
     elif args.sub_prog == 'coverage':
         import content.coverage as cvrg
         cvrg.main(args)

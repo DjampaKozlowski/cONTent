@@ -1,29 +1,17 @@
 import matplotlib.pyplot as plt
 import seaborn as sns
-import pandas as pd
-import numpy as np
-import sys
 sns.set_style("white")
 
 
 
-
-class PlotDistrib:
+class DistributionPLot:
     
-    def __init__(self, fpath, df, frac=0.0001, title=None, fig_height=12, width_ratio=5):
-        self.frac=frac
+    def __init__(self, fpath, df, title=None, fig_height=12, width_ratio=5):
+        self.data=df.copy()
+        self.fpath = fpath
         self.title=title
         self.fig_height = fig_height
         self.width_ratio = width_ratio
-        self.fpath = fpath
-        self.subsample(df)
-        self.create_graph()
-        self.save_graph()
-         
-    def subsample(self,df):
-        self.data = df.groupby(by='library')\
-            .sample(frac=self.frac)\
-                .reset_index(drop=True)
                 
     def create_graph(self):
         self.graph = sns.JointGrid(height=self.fig_height,ratio=self.width_ratio)
@@ -46,7 +34,7 @@ class PlotDistrib:
         
         
         
-class PlotCoverageTradeoff:
+class CoveragePlot:
     """
     Generate a plot (heatmap) representing the genome coverage for different
     reads' length and quality. 

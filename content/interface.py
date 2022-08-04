@@ -50,15 +50,13 @@ def arguments_parser():
         description="""Parse .content file(s) and create for each file a
         representation of the reads length and quality distribution. If several 
         files are provided, also compute a global figure.""")
-    dist_p.add_argument("-i",
-                        "--input",
+    dist_p.add_argument("-input",
                         help="""Input directory/file path. If the path point to 
                         a directory, all the '.content' files will be analysed 
                         (individually and together).""",
                         type=str,
                         required=True)
-    dist_p.add_argument("-o",
-                        "--outputdirpath",
+    dist_p.add_argument("-outdir",
                         help="""Output directory path. Nb: if the ouput 
                         directory does not exist, it will be created along with
                         its parent directories. If only a directory name is 
@@ -68,15 +66,13 @@ def arguments_parser():
                         """,
                         type=str,
                         required=True)
-    dist_p.add_argument("-p",
-                        "--prefix",
+    dist_p.add_argument("-prefix",
                         help="""Prefix used to name output files but also as  
                         plots' title (for global analysis). Spaces will be 
                         replaced with '_' in the files names""",
                         type=str,
                         required=True)
-    dist_p.add_argument("-f",
-                        "--fraction",
+    dist_p.add_argument("-fraction",
                         help="""fraction of reads to subsample per analysed 
                         library (distribution plot only). The more important 
                         is the fraction, the most time consuming the analysis 
