@@ -80,5 +80,3 @@ def main(args):
         )
     glob_distrib_plot.create_graph()
     glob_distrib_plot.save_graph()
-   
-    # python bin/cONTent.py distrib -input data -o tmp -prefix maksjfklsfdj -f 0.0001

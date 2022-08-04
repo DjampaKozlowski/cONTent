@@ -5,6 +5,25 @@ sns.set_style("white")
 
 
 class DistributionPLot:
+    """
+    Generate a plot representing reads length and quality distribution
+    
+    Attributes :
+    ------------
+    fpath (str)             --  output plot file path.
+    df (pandas dataframe)   --  dataframe containing the following columns : 
+                                'read_length' and 'read_avg_quality'.
+    title (str)             --  figure's title (default : None).
+    fig_height (float)      --  figure's height (inch)
+    width_ratio (float)     --  figure's width ratio regarding the height 
+    grapth (object)         --  matplolib object containing the plot
+    
+    Methods :
+    ---------
+    create_graph()          --  Create the plot. y axis represents reads quality 
+                                and x axis represents reads length (log scale).
+    save_grapth()           --  Save the generated plot as a file.
+    """
     
     def __init__(self, fpath, df, title=None, fig_height=12, width_ratio=5):
         self.data=df.copy()
