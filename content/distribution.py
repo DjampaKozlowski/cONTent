@@ -33,18 +33,19 @@ def main(args):
     ### List the files pointed by  args.input
     #
     lst_fpath = cmn.lst_content_files(args.input)
-    if len(lst_fpath) == 0:
+    nb_input_file = len(lst_fpath)
+    if nb_input_file == 0:
         print("No .content file found at the given adress. Program will end")
         sys.exit()
-    
-    ### Create the output directory tree as well as a sub-dir named 'individual 
-    #   where per-lib results will be stored
-    #   NB : existing files/directories will be overwritten.
-    #
-    ind_outdir_path = os.path.join(args.outdir, 'individual')
-    os.makedirs(ind_outdir_path, 
-                mode=0o755, 
-                exist_ok=True)
+    elif nb_input_file > 1:
+        ### Create the output directory tree as well as a sub-dir named 'individual 
+        #   where per-lib results will be stored
+        #   NB : existing files/directories will be overwritten.
+        #
+        ind_outdir_path = os.path.join(args.outdir, 'individual')
+        os.makedirs(ind_outdir_path, 
+                    mode=0o755, 
+                    exist_ok=True)
     
     ### Iterate through every input '.content' file(s) and create a global 
     #   dataframe.
@@ -59,27 +60,28 @@ def main(args):
         ## Sub-sample the file
         df = sub_sample_reads(df, args.fraction)
         print('df size after:', df.shape[0])
-
         ## Add the df to the list for further concatenation
         lst_df.append(df)
-        ## Create a plot for each lib
-        ind_distrib_plot = grph.DistributionPLot(
-            os.path.join(ind_outdir_path, f'ReadsDistribution_{lib_name}.pdf'),
-            df,
-            title=lib_name)
-        ind_distrib_plot.create_graph()
-        ind_distrib_plot.save_graph()
-        ## Save basic stats about reads' length and quality (individual)
-        df[['read_length', 'read_avg_quality']]\
-            .describe()\
-                .to_csv(
-                    os.path.join(ind_outdir_path, 
-                                 f'ReadsDistribution_basic_stats{lib_name}.tsv'
-                                 ),
-                    sep='\t'
-                )
+        if nb_input_file > 1:
+            ## Create a plot for each lib
+            ind_distrib_plot = grph.DistributionPLot(
+                os.path.join(ind_outdir_path, f'ReadsDistribution_{lib_name}.pdf'),
+                df,
+                title=lib_name)
+            ind_distrib_plot.create_graph()
+            ind_distrib_plot.save_graph()
+            ## Save basic stats about reads' length and quality (individual)
+            df[['read_length', 'read_avg_quality']]\
+                .describe()\
+                    .to_csv(
+                        os.path.join(ind_outdir_path, 
+                                    f'ReadsDistribution_basic_stats_{lib_name}.tsv'
+                                    ),
+                        sep='\t'
+                    )        
     
-    ### Create a global dataframe from all the libraries
+    ### Create a global dataframe from all the libraries (or from the only one 
+    #   if only one library is provided)
     #  
     df_glob = pd.concat(lst_df).reset_index(drop=True)    
     
@@ -94,6 +96,7 @@ def main(args):
     glob_distrib_plot.save_graph()
     
     ### Save basic stats about reads' length and quality (global)
+    #
     df_glob[['read_length', 'read_avg_quality']]\
     .describe()\
         .to_csv(
