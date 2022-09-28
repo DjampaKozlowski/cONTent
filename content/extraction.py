@@ -49,7 +49,7 @@ def main(args):
     
     ### Create the output directory tree as well as a sub-dir named 'individual 
     #   where per-lib results will be stored
-    #   NB : existing files/directories will be overwritten.
+    #   NB : existing files/directories will be overwriting.
     #
     os.makedirs(output_dir, 
                 mode=0o755, 

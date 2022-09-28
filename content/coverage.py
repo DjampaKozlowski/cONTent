@@ -108,7 +108,7 @@ def main(args):
         sys.exit()
     
     ### Create the output directory tree 
-    #   NB : existing files/directories will be overwritten.
+    #   NB : existing files/directories will be overwriting.
     #
     os.makedirs(args.outdir, 
                 mode=0o755, 

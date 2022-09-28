@@ -4,9 +4,9 @@
 cONTent is a tool-box allowing the analysis of ONT long-reads length and quality.
 
 cONTent is composed of 3 sub-programs:
-- extract : parse a read library and extract each reads' id, length and average phred quality. Then results are saved as tab-separated file with a '.content' extension. This tool is based on the nanoget (https://github.com/wdecoster/nanoget) developped by Wouter De Coster.
+- extract : parse a read library and extract each reads' id, length and average phred quality. Then results are saved as tab-separated file with a '.content' extension. This tool is based on the nanoget package (https://github.com/wdecoster/nanoget) developped by Wouter De Coster.
 - distribution : subsample read-librar(y/ies) and plot reads' quality as a function of the reads' length. Also compute basic statistics for these two measurments. NB : if several libraries are provided, individual plot and statistics will be generated for each library in addition to a global plot and table.  
-- coverage : compute genome coverage using different length and quality cut-offs. Display the results as a heatmap. This program might be usefull to set minimal reads length and quality to reach a target genome coverage.
+- coverage : compute genome coverage using different length and quality cut-offs. Display the results as a heatmap. This program might be usefull to set minimal reads length and quality cut-off to reach a target genome coverage.
 
 Programs usages and ouputs are extensively described below. 
 

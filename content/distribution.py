@@ -29,10 +29,12 @@ def sub_sample_reads(df, frac):
     return df.groupby(by='library').sample(frac=frac).reset_index(drop=True)
     
     
-def main(args):
+def main(input_dir, output_dir, fraction, prefix):
     ### List the files pointed by  args.input
     #
-    lst_fpath = cmn.lst_content_files(args.input)
+    ## TODO : modify the lst_content_files function so it ckeck for columns 
+    ## rather than just files extensions
+    lst_fpath = cmn.lst_content_files(input_dir)
     nb_input_file = len(lst_fpath)
     if nb_input_file == 0:
         print("No .content file found at the given adress. Program will end")
@@ -40,9 +42,9 @@ def main(args):
     elif nb_input_file > 1:
         ### Create the output directory tree as well as a sub-dir named 'individual 
         #   where per-lib results will be stored
-        #   NB : existing files/directories will be overwritten.
+        #   NB : existing files/directories will be overwriting.
         #
-        ind_outdir_path = os.path.join(args.outdir, 'individual')
+        ind_outdir_path = os.path.join(output_dir, 'individual')
         os.makedirs(ind_outdir_path, 
                     mode=0o755, 
                     exist_ok=True)
@@ -53,13 +55,11 @@ def main(args):
     for fpath in lst_fpath:
         ## Read the .content file
         df = pd.read_csv(fpath, sep='\t')
-        print('df size before:', df.shape[0])
         ## Add the origin information
         lib_name = os.path.splitext(os.path.basename(fpath))[0]
         df['library'] = lib_name
         ## Sub-sample the file
-        df = sub_sample_reads(df, args.fraction)
-        print('df size after:', df.shape[0])
+        df = sub_sample_reads(df, fraction)
         ## Add the df to the list for further concatenation
         lst_df.append(df)
         if nb_input_file > 1:
@@ -88,9 +88,9 @@ def main(args):
     ### Generate a global plot over all the input libraries
     #
     glob_distrib_plot = grph.DistributionPLot(
-        os.path.join(args.outdir, f'ReadsDistribution_{args.prefix}.pdf'),
+        os.path.join(output_dir, f'ReadsDistribution_{prefix}.pdf'),
         df_glob,
-        title=args.prefix
+        title=prefix
         )
     glob_distrib_plot.create_graph()
     glob_distrib_plot.save_graph()
@@ -100,7 +100,9 @@ def main(args):
     df_glob[['read_length', 'read_avg_quality']]\
     .describe()\
         .to_csv(
-            os.path.join(args.outdir, 
-                         f'ReadsDistribution_basic_stats{args.prefix}.tsv'),
+            os.path.join(output_dir, 
+                         f'ReadsDistribution_basic_stats{prefix}.tsv'),
             sep='\t'
         )
+        
+    

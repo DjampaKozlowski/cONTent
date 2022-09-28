@@ -8,7 +8,7 @@ if __name__ == '__main__':
         xtrct.main(args)
     elif args.sub_prog == 'distrib':
         import content.distribution as dstrb
-        dstrb.main(args)
+        dstrb.main(args.input, args.outdir, args.fraction, args.prefix)
     elif args.sub_prog == 'coverage':
         import content.coverage as cvrg
         cvrg.main(args)

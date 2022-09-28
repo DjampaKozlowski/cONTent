@@ -45,7 +45,7 @@ class DistributionPLot:
                 y=self.data.read_avg_quality.median())
         self.graph.ax_joint.set_xlabel("length (bp) [log-scale]", fontsize=15, y=-0.2)
         self.graph.ax_joint.set_ylabel("quality (phred)", fontsize=15, x=-0.2)
-        if self.title:    
+        if self.title:
             plt.suptitle(str(self.title), fontsize=20, y=1.05)
             
     def save_graph(self):
