@@ -100,8 +100,18 @@ class GenomeCoverage:
 
 
 def main(args):
+    """
+    Execute the whole analysis. 
+    
+    TODO : make intermediate functions to make the program more versatile,
+    especially to be able to use the functions in a notebook for instance.
+    """
+    
     ### List the files pointed by  args.input
     #
+    #   TODO : replace '.content' extension by a test that check the input 
+    #   dataframe has the right number of columns and the right columns
+    #   names.
     lst_fpath = cmn.lst_content_files(args.input)
     if len(lst_fpath) == 0:
         print("No .content file found at the given adress. Program will end")

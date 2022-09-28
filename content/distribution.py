@@ -30,6 +30,13 @@ def sub_sample_reads(df, frac):
     
     
 def main(input_dir, output_dir, fraction, prefix):
+    """
+    Execute the whole analysis. 
+    
+    TODO : make intermediate functions to make the program more versatile,
+    especially to be able to use the functions in a notebook for instance.
+    """
+    
     ### List the files pointed by  args.input
     #
     ## TODO : modify the lst_content_files function so it ckeck for columns 
