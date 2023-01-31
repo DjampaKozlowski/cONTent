@@ -76,7 +76,7 @@ python cONTent.py distrib [-h] -input INPUTPATH -outdir OUTPUTPATH -prefix PREFI
 Launch cONTent.py coverage doing :
 
 ```
-python cONTent.py [-h] -input INPUTPATH -outdir OUTPUTPATH -prefix PREFIX -genomesize GENOMESIZE [-n N] [-m M] [-mincoverage MINCOV]
+python cONTent.py coverage [-h] -input INPUTPATH -outdir OUTPUTPATH -prefix PREFIX -genomesize GENOMESIZE [-n N] [-m M] [-mincoverage MINCOV]
 ```
 - < INPUTPATH > : Input directory/file path. If the path point to a directory, all the '.content' files will be analysed (individually and together). [mendatory]
 - < OUTPUTPATH > : Output directory path. Nb: if the ouput directory does not exist, it will be created along with its parent directories. If only a directory name is provided, the directory will be created in the execution directory. In any case,if the directory exist, it will be overwritten as well as the files it might contain (if files with the same name exist). [mendatory]
