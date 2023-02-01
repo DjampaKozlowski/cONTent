@@ -138,5 +138,21 @@ def arguments_parser():
                         only) (default : 50)""",
                         type=int,
                         default=50) 
+    cov_p.add_argument(
+        "-minquality",
+        help="""Minimal quality to represent (optimization plot 
+                        only) (default : 12)
+        """,
+        type=int,
+        default=12,
+    )
+    cov_p.add_argument(
+        "-minlength",
+        help="""Minimal length of sequences to represent (optimization plot 
+                        only) (default : 1000)
+        """,
+        type=int,
+        default=1000,
+    )
 
     return parser.parse_args()

@@ -141,10 +141,12 @@ def main(args):
     genome_coverage = GenomeCoverage(
         df_glob,
         args.genomesize,
-        n=args.n, 
-        m=args.m, 
-        min_cov=args.mincoverage
-        )
+        n=args.n,
+        m=args.m,
+        min_cov=args.mincoverage,
+        min_length=args.minlength,
+        min_quality=args.minquality,
+    )
     genome_coverage.compute_coverage()
     df_coverage = genome_coverage.coverage
     
