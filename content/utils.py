@@ -1,14 +1,15 @@
 import os
 import multiprocessing
 
+
 def manage_cpus(nb_wanted_cpus):
     """
     Check the number of available CPUs, compare it with the number of CPUs
     wanted and return the number of CPUs to use.
-    If the number of CPU wanted is > to the number of available CPU or <= 0, the 
-    max number of available CPU is returned. Else, the required number of CPU 
+    If the number of CPU wanted is > to the number of available CPU or <= 0, the
+    max number of available CPU is returned. Else, the required number of CPU
     is returned.
-    
+
     Parameters:
     -----------
         nb_wanted_cpus (int)    :   the number of CPU wanted. If == 0, will return
@@ -29,15 +30,15 @@ def manage_cpus(nb_wanted_cpus):
 
 def lst_files_in_dir(dpath, ext=None):
     """
-    List files in a directory and return a list of file paths. 
-    
+    List files in a directory and return a list of file paths.
+
     Optional : a file extension can be specified. If so, only files with such
     extension will be outputed. NB : Extension is case sensitive.
-    
+
     Parameters :
     ------------
     dpath (str) -- directory path
-    
+
     Returns :
     ---------
     (list) -- list of files paths.
@@ -47,11 +48,9 @@ def lst_files_in_dir(dpath, ext=None):
         for f in os.scandir(dpath):
             if f.is_file():
                 if f.name.endswith(ext):
-                    lst_fpath.append(os.path.abspath(f.path))        
+                    lst_fpath.append(os.path.abspath(f.path))
     else:
         for f in os.scandir(dpath):
             if f.is_file():
                 lst_fpath.append(os.path.abspath(f.path))
     return lst_fpath
-
-
