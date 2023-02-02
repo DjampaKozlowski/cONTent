@@ -57,6 +57,7 @@ class DistributionPLot:
 
     def save_graph(self):
         plt.savefig(self.fpath, bbox_inches="tight")
+        plt.close()
 
 
 class CoveragePlot:
@@ -113,3 +114,4 @@ class CoveragePlot:
         Save the generated plot as a file
         """
         plt.savefig(self.fpath)
+        plt.close()
