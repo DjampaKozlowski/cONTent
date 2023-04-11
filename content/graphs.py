@@ -89,11 +89,18 @@ class CoveragePlot:
         Create a heatmap from coverage values at different quality and length 
         cut-off. Min. quality is represented on the y axis and length on the x axis.
         """
+        import numpy as np
         plt.figure(figsize=self.fig_size)
-        ax1 = sns.heatmap(
-            self.data[['min_quality', 'min_length', 'coverage']].round(1)\
-                .pivot(index='min_quality', columns='min_length', values='coverage'),
-                    cbar_kws = dict(location="bottom"))
+        # Fixed a bug raising "ValueError("Index contains duplicate entries, cannot reshape")"
+        # by using pivot_table instead of pivot. That way, we avoid having duplicates of 
+        # of 'min_quality' and 'min_length'. The duplicates happend when we round the values 
+        # which is necessary to avoid to consider epsilon variations. The bug is fixed by
+        # computing the mean coverage for the duplicated lines with the same 
+        # 'min_quality' and 'min_length'
+        df = self.data[['min_quality', 'min_length', 'coverage']]\
+            .round(1)\
+                .pivot_table(index='min_quality', columns='min_length', values='coverage', aggfunc='mean')
+        ax1 = sns.heatmap(df ,cbar_kws = dict(location="bottom"))
         ax1.figure.axes[-1].set_xlabel('Coverage (X)', size=15)
 
         if self.title:
