@@ -105,7 +105,7 @@ class CoveragePlot:
         # 'min_quality' and 'min_length'
         df = self.data[['min_quality', 'min_length', 'coverage']]\
             .round(1)\
-                .pivot_table(index='min_quality', columns='min_length', values='coverage', aggfunc='mean')
+            .pivot_table(index='min_quality', columns='min_length', values='coverage', aggfunc='mean')
         ax1 = sns.heatmap(df ,cbar_kws = dict(location="bottom"))
         ax1.figure.axes[-1].set_xlabel('Coverage (X)', size=15)
 
