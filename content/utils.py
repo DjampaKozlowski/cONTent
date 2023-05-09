@@ -22,10 +22,9 @@ def manage_cpus(nb_wanted_cpus):
 
     nb_available_cpus = multiprocessing.cpu_count()
     if (nb_wanted_cpus <= 0) or (nb_wanted_cpus > nb_available_cpus):
-        nb_cpu_to_use = nb_available_cpus
+        return nb_available_cpus
     else:
-        nb_cpu_to_use = nb_wanted_cpus
-    return nb_cpu_to_use
+        return nb_wanted_cpus
 
 
 def lst_files_in_dir(dpath, ext=None):
@@ -43,14 +42,15 @@ def lst_files_in_dir(dpath, ext=None):
     ---------
     (list) -- list of files paths.
     """
-    lst_fpath = []
+    # lst_fpath = []
     if ext:
-        for f in os.scandir(dpath):
-            if f.is_file():
-                if f.name.endswith(ext):
-                    lst_fpath.append(os.path.abspath(f.path))
+        lst_fpath = [
+            os.path.abspath(f.path)
+            for f in os.scandir(dpath)
+            if f.is_file() and f.name.endswith(ext)
+        ]
+
     else:
-        for f in os.scandir(dpath):
-            if f.is_file():
-                lst_fpath.append(os.path.abspath(f.path))
+        lst_fpath = [os.path.abspath(f.path) for f in os.scandir(dpath) if f.is_file()]
+
     return lst_fpath

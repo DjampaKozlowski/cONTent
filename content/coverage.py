@@ -67,12 +67,14 @@ class GenomeCoverage:
         """
         Split length space into n even intervals (log scale)
         """
-        self.scl_l = np.flip(
-            np.geomspace(
-                start=self.data.read_length.min(),
-                stop=self.data.read_length.max(),
-                num=self.n,
-            )
+        self.scl_l = np.unique(
+            np.flip(
+                np.geomspace(
+                    start=self.data.read_length.min(),
+                    stop=self.data.read_length.max(),
+                    num=self.n,
+                )
+            ).astype(int)
         )
 
     def split_quality_space(self):
@@ -95,21 +97,47 @@ class GenomeCoverage:
         self.split_length_space()
         self.split_quality_space()
         lst_dct = []
-        for q in self.scl_q:
-            for l in self.scl_l:
-                L = self.data[
-                    (self.data.read_length >= l) & (self.data.read_avg_quality >= q)
-                ].read_length.sum()
-                C = L / self.genome_size
-                lst_dct.append(
-                    {
-                        "min_length": l,
-                        "min_quality": q,
-                        "total_length": L,
-                        "coverage": C,
-                    }
-                )
-        self.coverage = pd.DataFrame(lst_dct)
+
+        df = pd.DataFrame({"min_length": self.scl_l}).merge(
+            pd.DataFrame({"min_quality": self.scl_q}), how="cross"
+        )
+
+        df["total_length"] = np.nan
+
+        for l in self.scl_l:
+            df_out = self.data[self.data.read_length >= l]
+
+            qmin = df_out.read_avg_quality.min()
+            qmax = df_out.read_avg_quality.max()
+
+            scl_q_tmp = self.scl_q[(self.scl_q >=  qmin) & (self.scl_q <= qmax) ]
+
+            L = 0
+            for q in scl_q_tmp:
+
+                L = df_out[df_out.read_avg_quality >= q].read_length.sum()
+
+                df.loc[(df.min_length == l) & (df.min_quality == q), "total_length"] = L
+
+                # L = self.data[
+                #     (self.data.read_length >= l) & (self.data.read_avg_quality >= q)
+                # ].read_length.sum()
+                # C = L / self.genome_size
+                # lst_dct.append(
+                #     {
+                #         "min_length": l,
+                #         "min_quality": q,
+                #         "total_length": L,
+                #         "coverage": C,
+                #     }
+                # )
+            df.loc[(df.min_length == l) & (df.min_quality <= qmin), "total_length"] = L
+
+        df = df.dropna()
+        # self.coverage = pd.DataFrame(lst_dct)
+        df["coverage"] = df.total_length / self.genome_size
+
+        self.coverage = df
         if self.min_cov:
             self.coverage = self.coverage[self.coverage.coverage >= self.min_cov]
 
@@ -139,10 +167,7 @@ def main(args):
 
     ### Iterate through every input '.content' file(s) and create a global
     #   dataframe.
-    lst_df = []
-    for fpath in lst_fpath:
-        df = pd.read_csv(fpath, sep="\t")
-        lst_df.append(df)
+    lst_df = [pd.read_csv(fpath, sep="\t") for fpath in lst_fpath]
 
     ### Create a global dataframe from all the libraries
     #
@@ -177,3 +202,22 @@ def main(args):
     df_coverage.to_csv(
         os.path.join(args.outdir, f"Coverage_{args.prefix}.tsv"), sep="\t", index=False
     )
+
+
+if __name__ == "__main__":
+    from dataclasses import dataclass
+
+    @dataclass
+    class Args:
+        input: str
+        outdir: str
+        n: int
+        m: int
+        mincoverage: int
+        minlength: int
+        minquality: int
+        genomesize: int
+        prefix: str = ""
+
+    args = Args("../all", "../all_out", 100, 100, 20, 1000, 8, 235_387_000)
+    main(args)
