@@ -37,17 +37,6 @@ def arguments_parser():
         required=True,
     )
 
-    scan_p.add_argument(
-        "-t",
-        "--threads",
-        help="""Number of parallel jobs. If a negative number 
-                        is provided or if the provided number exceed the number 
-                        of available CPUs, the number of threads is set to the 
-                        maximum number of available CPUs [default=1]""",
-        type=int,
-        default=1,
-    )
-
     dist_p = subparsers.add_parser(
         "distrib",
         description="""Parse .content file(s) and create for each file a
