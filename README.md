@@ -13,27 +13,52 @@ cONTent is composed of 3 sub-programs:
 
 Programs usages and ouputs are extensively described the 'Usage' section below.
 
-## Installation
+## Installation guide
 
-Clone the repository in the desired location
-
-```
-git clone git@github.com:DjampaKozlowski/cONTent.git
-```
-
-Then, exectute the following lines. These lines will :
-
+### Create a dedicated virtual environment (OPTIONAL)
+It is asvised to create a dedicated virtual environment (here we use Conda) to install cONTent. The following lines will 
 - create a python 3.10.4 conda environment named 'content_env'
 - activate the 'content_env'
-- install the required dependencies and set the enviroment as follow : biopython==1.79, certifi==2021.10.8, nanoget==1.16.1, numpy==1.22.3, pandas==1.4.2, pysam==0.19.0, python-dateutil==2.8.2, pytz==2022.1, six==1.16.0 .
-- install the package.
 
 ```
 conda create -n content_env -y python=3.10.4
 conda activate content_env
+```
+
+### Clone the github repository
+
+Go to the desired location and clone the repository.
+
+```
+cd <INSERT_PATH_OF_DESIRED_LOCATION>
+git clone git@github.com:DjampaKozlowski/cONTent.git
 cd cONTent/
+```
+
+### Install cONTent. 
+cONTent rely on various scripts in python and C++ (information extraction from the fastq). You can install cONTent following two strategies :
+- automatic
+- manual
+
+### Automatic installation
+Execute the following line :
+```
+make install
+```
+This will :
+- install the python dependencies and install cONTent as a python module 
+- create a directory named `build` in `content`
+- compile the C++ program `content/fastq_processor.cpp` and generate an executable stored in `content/build`. 
+
+### Manual installation 
+
+```
+echo "Installing python requirements & installing the content module"
 pip install -r requirements.txt
 pip install -e .
+echo "Building the fastq parser"
+mkdir -p content/build/
+g++ -std=c++11 content/fastq_processor.cpp -o content/build/fastq_processor
 ```
 
 ## Usage
