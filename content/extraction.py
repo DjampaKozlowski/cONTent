@@ -1,6 +1,5 @@
 import os
 import pandas as pd
-import content.utils as utls
 
 
 def extract_infos_from_fastq(fpath, threads):
@@ -9,7 +8,10 @@ def extract_infos_from_fastq(fpath, threads):
         - the read name
         - the read length
         - the average read quality
-    This function uses 
+    This function uses stream_fastq_full function
+    from nanoget.extraction_functions (https://github.com/wdecoster/nanoget)
+    See nanoget.utils.ave_qual function for more information about the quality
+    score computation.
 
     Parameters :
     ------------
@@ -28,9 +30,6 @@ def main(args):
     input_fpath = os.path.abspath(args.inputfilepath)
     output_dir = os.path.abspath(args.outputdirpath)
 
-    ### Set the number of CPUs to use
-    #
-    nb_cpu = utls.manage_cpus(args.threads)
 
     ### Parse fastq file
     #
