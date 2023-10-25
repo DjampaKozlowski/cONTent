@@ -1,5 +1,7 @@
 import matplotlib.pyplot as plt
 import seaborn as sns
+import numpy as np
+
 
 sns.set_style("white")
 
@@ -94,7 +96,6 @@ class CoveragePlot:
         Create a heatmap from coverage values at different quality and length
         cut-off. Min. quality is represented on the y axis and length on the x axis.
         """
-        import numpy as np
         plt.figure(figsize=self.fig_size)
 
         # Fixed a bug raising "ValueError("Index contains duplicate entries, cannot reshape")"
