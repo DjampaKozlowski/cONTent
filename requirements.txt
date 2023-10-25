@@ -1,12 +1,5 @@
-biopython==1.79
-certifi==2021.10.8
-nanoget==1.16.1
 numpy==1.22.3
 pandas==1.4.2
-pysam==0.19.0
-python-dateutil==2.8.2
-pytz==2022.1
-six==1.16.0
 matplotlib==3.5.2
 seaborn==0.11.2
 
