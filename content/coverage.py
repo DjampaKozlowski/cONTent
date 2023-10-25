@@ -202,22 +202,3 @@ def main(args):
     df_coverage.to_csv(
         os.path.join(args.outdir, f"Coverage_{args.prefix}.tsv"), sep="\t", index=False
     )
-
-
-if __name__ == "__main__":
-    from dataclasses import dataclass
-
-    @dataclass
-    class Args:
-        input: str
-        outdir: str
-        n: int
-        m: int
-        mincoverage: int
-        minlength: int
-        minquality: int
-        genomesize: int
-        prefix: str = ""
-
-    args = Args("../all", "../all_out", 100, 100, 20, 1000, 8, 235_387_000)
-    main(args)
