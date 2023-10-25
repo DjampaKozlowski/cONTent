@@ -24,14 +24,11 @@ def extract_infos_from_fastq(fp_input, fp_output):
     Execute a C++ program as a subprocess to extract informations 
     from a .fastq file.
     
-    For each reads contained in a .fastq / .fastq.gz file, extract :
+    For each reads contained in a .fastq file, extract :
         - the read name
         - the read length
         - the average read quality
-    This function uses stream_fastq_full function
-    from nanoget.extraction_functions (https://github.com/wdecoster/nanoget)
-    See nanoget.utils.ave_qual function for more information about the quality
-    score computation.
+    and save the results as a tab separated file.
 
     Parameters :
     ------------
@@ -41,11 +38,12 @@ def extract_infos_from_fastq(fp_input, fp_output):
     prefix = os.path.splitext(fp_output)[0]
     fp_stdout = prefix+'.stdout'
     fp_stderr = prefix+'.stderr'
-    if os.path.exists('build/fastq_processor'):
-        cmd = f"build/fastq_processor {fp_input} {fp_output}"
+    fp_fastq_processor = os.path.join(os.path.dirname(__file__), 'build','fastq_processor')
+    if os.path.exists(fp_fastq_processor):
+        cmd = f"{fp_fastq_processor} {fp_input} {fp_output}"
         launch_subprocess(cmd, fp_stdout, fp_stderr)
     else:
-        print("Can't find build/fastq_processor. Please compile the program and store it in the build repository")
+        print(f"Can't find {fp_fastq_processor}. Please compile the program and store it in the build repository")
         sys.exit()
 
 
