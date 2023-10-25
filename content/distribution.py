@@ -1,5 +1,6 @@
 import sys
 import os
+import time
 
 import pandas as pd
 import numpy as np
@@ -34,6 +35,9 @@ def main(input_dir, output_dir, fraction, prefix):
     TODO : make intermediate functions to make the program more versatile,
     especially to be able to use the functions in a notebook for instance.
     """
+    print("Starting cONTent distribution analysis")
+    start_time = time.time()
+
 
     ### List the files pointed by  args.input
     #
@@ -102,3 +106,5 @@ def main(input_dir, output_dir, fraction, prefix):
     df_glob[["read_length", "read_avg_quality"]].describe().to_csv(
         os.path.join(output_dir, f"ReadsDistribution_basic_stats{prefix}.tsv"), sep="\t"
     )
+    stop_time = time.time()
+    print(f"duration : {np.round(stop_time-start_time, 3)} s")

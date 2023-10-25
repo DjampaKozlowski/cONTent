@@ -1,6 +1,8 @@
 import os
 import sys
 import subprocess
+import time
+import numpy as np
 
 
 def launch_subprocess(cmd, fp_stdout, fp_stderr):
@@ -48,6 +50,9 @@ def extract_infos_from_fastq(fp_input, fp_output):
 
 
 def main(args):
+    print("Starting cONTent extract analysis")
+    start_time = time.time()
+
     ### Set the input/ouput paths
     #
     input_fpath = os.path.abspath(args.inputfilepath)
@@ -65,3 +70,5 @@ def main(args):
     ### Parse fastq file using the fastq_processor C++ program
     #
     extract_infos_from_fastq(input_fpath, output_fpath)
+    stop_time = time.time()
+    print(f"duration : {np.round(stop_time-start_time, 3)} s")

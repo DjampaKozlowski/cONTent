@@ -1,7 +1,16 @@
 import argparse
 
 
-PROG_DESCRIPTION = "this is a global description of the program"
+PROG_DESCRIPTION = """
+cONTent is a tool-box allowing the analysis of ONT long-reads length and quality.
+
+cONTent tool-box contains 3 sub-programs:
+- extract
+- distribution 
+- coverage
+
+Execute `python cONTent.py < extract | distribution | coverage > -h` for more information
+"""
 
 
 def arguments_parser():

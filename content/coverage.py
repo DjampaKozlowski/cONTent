@@ -3,7 +3,10 @@ import os
 
 import pandas as pd
 import numpy as np
-import seaborn as sns
+import time
+
+
+#import seaborn as sns
 
 #sns.set_style("white")
 
@@ -149,6 +152,8 @@ def main(args):
     TODO : make intermediate functions to make the program more versatile,
     especially to be able to use the functions in a notebook for instance.
     """
+    print("Starting cONTent coverage analysis")
+    start_time = time.time()
 
     ### List the files pointed by  args.input
     #
@@ -202,3 +207,5 @@ def main(args):
     df_coverage.to_csv(
         os.path.join(args.outdir, f"Coverage_{args.prefix}.tsv"), sep="\t", index=False
     )
+    stop_time = time.time()
+    print(f"duration : {np.round(stop_time-start_time, 3)} s")
