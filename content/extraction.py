@@ -1,6 +1,5 @@
 import os
 import pandas as pd
-import nanoget.extraction_functions as nef
 import content.utils as utls
 
 
@@ -10,10 +9,7 @@ def extract_infos_from_fastq(fpath, threads):
         - the read name
         - the read length
         - the average read quality
-    This function uses stream_fastq_full function
-    from nanoget.extraction_functions (https://github.com/wdecoster/nanoget)
-    See nanoget.utils.ave_qual function for more information about the quality
-    score computation.
+    This function uses 
 
     Parameters :
     ------------
