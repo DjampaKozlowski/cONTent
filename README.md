@@ -16,7 +16,7 @@ Programs usages and ouputs are extensively described the 'Usage' section below.
 ## Installation guide
 
 ### Create a dedicated virtual environment (OPTIONAL)
-It is asvised to create a dedicated virtual environment (here we use Conda) to install cONTent. The following lines will 
+It is advised to create a dedicated virtual environment (here we use Conda) to install cONTent. The following lines will 
 - create a python 3.10.4 conda environment named 'content_env'
 - activate the 'content_env'
 
@@ -76,19 +76,16 @@ NB : parameters between brackets are optional parameters with default values.
 Launch cONTent.py extract doing :
 
 ```
-python cONTent.py extract [-h] -i INPUTFILEPATH -o OUTPUTFILEPATH [-t THREADS]
+python cONTent.py extract [-h] -i INPUTFILEPATH -o OUTPUTFILEDIR
 ```
 
 where:
 
 - < INPUTFILEPATH > : input fastq/fastq.gz file path [mendatory]
-- < OUTPUTFILEPATH > : output tsv file path [mendatory]
-- < THREADS > : number of parallels workers. Is set to the maximum of available CPUs if <= 0 or if > to the maximum of available CPUs. [default : 1].
+- < OUTPUTFILEDIR > : output directory path [mendatory]. The output file will be named after the input file name with the extension `.content`. 
 
-cONTent.py coverage can be parallelized both by :
+Information extraction is a time consuming process. We advise if possible to run one process per library rather than concatenating the libraries and running one process. The other tools from the cONTent suite are designed to merge information from multiple cONTent.py extract output files  
 
-- using multiple cores
-- launching several runs, one for each reads library
 
 ### distrib
 
