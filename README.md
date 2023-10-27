@@ -32,7 +32,7 @@ Go to the desired location and clone the repository.
 
 ```
 cd <INSERT_PATH_OF_DESIRED_LOCATION>
-git clone git@github.com:DjampaKozlowski/cONTent.git
+git clone https://github.com/DjampaKozlowski/cONTent.git
 cd cONTent/
 ```
 
