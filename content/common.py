@@ -1,6 +1,30 @@
 import os
-import sys
-import content.utils as utls
+
+def lst_files_in_dir(dpath, ext=None):
+    """
+    List files in a directory and return a list of file paths.
+    Optional : a file extension can be specified. If so, only files with such
+    extension will be outputed. NB : Extension is case sensitive.
+    Parameters :
+    ------------
+    dpath (str) -- directory path
+    Returns :
+    ---------
+    (list) -- list of files paths.
+    """
+    # lst_fpath = []
+    if ext:
+        lst_fpath = [
+            os.path.abspath(f.path)
+            for f in os.scandir(dpath)
+            if f.is_file() and f.name.endswith(ext)
+        ]
+
+    else:
+        lst_fpath = [os.path.abspath(f.path) for f in os.scandir(dpath) if f.is_file()]
+
+    return lst_fpath
+
 
 
 def lst_content_files(input_path):
