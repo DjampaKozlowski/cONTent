@@ -5,11 +5,6 @@ import pandas as pd
 import numpy as np
 import time
 
-
-#import seaborn as sns
-
-#sns.set_style("white")
-
 import content.common as cmn
 import content.graphs as grph
 
@@ -122,18 +117,6 @@ class GenomeCoverage:
 
                 df.loc[(df.min_length == l) & (df.min_quality == q), "total_length"] = L
 
-                # L = self.data[
-                #     (self.data.read_length >= l) & (self.data.read_avg_quality >= q)
-                # ].read_length.sum()
-                # C = L / self.genome_size
-                # lst_dct.append(
-                #     {
-                #         "min_length": l,
-                #         "min_quality": q,
-                #         "total_length": L,
-                #         "coverage": C,
-                #     }
-                # )
             df.loc[(df.min_length == l) & (df.min_quality <= qmin), "total_length"] = L
 
         df = df.dropna()
