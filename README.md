@@ -115,6 +115,6 @@ python cONTent.py coverage [-h] -input INPUTPATH -outdir OUTPUTPATH -prefix PREF
 - < GENOMESIZE > : Genome size (bp). Necessary to compute genome coverage
 - < N > : Number of interval to create in reads length space (optimization plot only; used to compute coverage). Increasing n makes the coverage length/quality trade-off analysis more precise but also more time consuming. (default : 100).
 - < M > : Number of interval to create in reads quality space (optimization plot only; used to compute coverage) Increasing n makes the coverage length/quality trade-offanalysis more precise but also more time consuming. (default : 100).
-- < MINCOV > : Minimal coverage to represent (optimization plot only). (default : 50).
+- < MINCOV > : Minimal coverage to represent (optimization plot only). (default : 20).
 - < MINQ > : Minimal quality to represent (optimization plot only) (default : 12)
 - < MINL > :Minimal length of sequences to represent (optimization plot only) (default : 1000)
