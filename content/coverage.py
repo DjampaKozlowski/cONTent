@@ -49,14 +49,14 @@ class GenomeCoverage:
     """
 
     def __init__(
-        self, df, genome_size, n=10, m=10, min_length=1000, min_quality=12
+        self, df, genome_size, n=10, m=10, min_cov=20, min_length=1000, min_quality=12
     ):
 
         self.genome_size = genome_size
         self.min_quality = min_quality
         self.n = n
         self.m = m
-        #self.min_cov = min_cov
+        self.min_cov = min_cov
         self.data = df[
             (df.read_length >= min_length) & (df.read_avg_quality >= min_quality)
         ].copy()
@@ -121,7 +121,21 @@ class GenomeCoverage:
         df = df.dropna()
         df["coverage"] = df.total_length / self.genome_size
 
-        self.coverage = df
+        ### Check if the actual coverage is superior to the required minimum 
+        #   coverage to display
+        if df.coverage.max() < self.min_cov:
+            print(f"""Maximum genome coverage ({np.round(df.coverage.max(),2)} X) 
+                  computed from the provided file with the specified genome 
+                  size ({self.genome_size} bp)and the minimum required 
+                  quality ({self.min_quality}) is inferior to the minimum 
+                  coverage required ({self.min_cov})""")
+            print("Please, re-run the program with a lower '-mincoverage' value")
+            sys.exit()
+        
+        else:
+            self.coverage = df[df.coverage >= self.min_cov] 
+
+        #self.coverage = df
         #if self.min_cov:
         #    self.coverage = self.coverage[self.coverage.coverage >= self.min_cov]
 
@@ -172,13 +186,6 @@ def main(args):
     )
     genome_coverage.compute_coverage()
     df_coverage = genome_coverage.coverage
-    
-    ### Check if the actual coverage is superior to the required minimum 
-    #   coverage to display
-    if df_coverage.coverage.max() < args.mincoverage:
-        print(f"Maximum genome coverage ({np.round(df_coverage.coverage.max(),2)} X) computed from the provided file with the provided genome size ({args.genomesize} bp) is inferior to the minimum coverage required ({args.mincoverage})")
-        print("Please, re-run the program with a lower '-mincoverage' value")
-        sys.exit()
 
     ### Create and save the optimization plot (global dataframe)
     #
