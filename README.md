@@ -7,7 +7,7 @@ cONTent is a tool-box allowing the analysis of ONT long-reads length and quality
 
 cONTent is composed of 3 sub-programs:
 
-- extract : parse a read library and extract each reads' id, length and average phred quality. Then results are saved as tab-separated file with a '.content' extension. The extracted
+- extract : parse a read library (/!\ SHOULD BE A FASTQ FILE AND NOT A FASTQ.GZ) and extract each reads' id, length and average phred quality. Then results are saved as tab-separated file with a '.content' extension. The extracted
   information are per read identifier, length, and mean quality (phred score).
 - distribution : subsample read-librar(y/ies) and plot reads' quality as a function of the reads' length. Also compute basic statistics for these two measurments. NB : if several libraries are provided, individual plot and statistics will be generated for each library in addition to a global plot and table.
 - coverage : compute genome coverage using different length and quality cut-offs. Display the results as a heatmap. This program might be usefull to set minimal reads length and quality cut-off to reach a target genome coverage. NB : The output table only display rows for which the coverage obtained with these values of minimal reads' length and quality satisfies the required coverage.
@@ -82,7 +82,7 @@ python cONTent.py extract [-h] -i INPUTFILEPATH -o OUTPUTFILEDIR
 
 where:
 
-- < INPUTFILEPATH > : input fastq/fastq.gz file path [mendatory]
+- < INPUTFILEPATH > : input fastq file (/!\ SHOULD BE A FASTQ FILE AND NOT A FASTQ.GZ) path [mendatory]
 - < OUTPUTFILEDIR > : output directory path [mendatory]. The output file will be named after the input file name with the extension `.content`. 
 
 Information extraction is a time consuming process. We advise if possible to run one process per library rather than concatenating the libraries and running one process. The other tools from the cONTent suite are designed to merge information from multiple cONTent.py extract output files  
