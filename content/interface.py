@@ -20,7 +20,7 @@ def arguments_parser():
 
     scan_p = subparsers.add_parser(
         "extract",
-        description="""Parse read library (fastq/fastq.gz) and for each 
+        description="""Parse read library (/!\ SHOULD BE A FASTQ FILE AND NOT A FASTQ.GZ) and for each 
         read extract the read's name, length, and average quality. Save the 
         results as a tab separated file with the following name :
         '<input_file_name>.content'.""",
