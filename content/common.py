@@ -46,7 +46,7 @@ def lst_content_files(input_path):
     """
     lst_paths = []
     if os.path.isdir(input_path):
-        lst_paths = utls.lst_files_in_dir(input_path, ".content")
+        lst_paths = lst_files_in_dir(input_path, ".content")
     elif os.path.isfile(input_path) and input_path.endswith(".content"):
         lst_paths = [os.path.abspath(input_path)]
 
