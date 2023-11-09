@@ -157,9 +157,9 @@ def arguments_parser():
     cov_p.add_argument(
         "-mincoverage",
         help="""Minimal coverage to represent (optimization plot 
-                        only) (default : 50)""",
+                        only) (default : 20)""",
         type=int,
-        default=50,
+        default=20,
     )
     cov_p.add_argument(
         "-minquality",
