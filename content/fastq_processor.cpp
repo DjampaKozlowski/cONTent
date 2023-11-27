@@ -77,6 +77,10 @@ public:
                 if (quality.length() == seq_len) { 
                     all_quality_content=true;
                 }
+                else if (quality.length() > seq_len) {
+                    cerr << "Error : The sequence " << header << " has an quality length superior to the sequence length" << endl;
+                    exit(EXIT_FAILURE);
+                }
             }
         }
 
@@ -109,7 +113,7 @@ int main(int argc, char* argv[]) {
     }
 
     string inputFilePath = argv[1]; // Input Fastq file path
-    string outputFilePath = argv[2]; // Output text file pat
+    string outputFilePath = argv[2]; // Output text file path
 
     FastqProcessor processor(inputFilePath, outputFilePath);
     processor.process_fastq_file();
