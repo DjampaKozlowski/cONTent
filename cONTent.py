@@ -2,7 +2,7 @@ import sys
 import content.interface as intrf
 import numpy as np
 
-if __name__ == "__main__":
+def main():
     args = intrf.arguments_parser()
     if args.sub_prog == "extract":
         import content.extraction as xtrct
@@ -20,3 +20,6 @@ if __name__ == "__main__":
     else:
         print(intrf.PROG_DESCRIPTION)
         sys.exit()
+
+if __name__ == "__main__":
+    main()
