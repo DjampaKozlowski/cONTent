@@ -9,7 +9,8 @@ cONTent tool-box contains 3 sub-programs:
 - distribution 
 - coverage
 
-Execute `python cONTent.py < extract | distribution | coverage > -h` for more information
+Execute `python cONTent.py < extract | distribution | coverage > -h` for more information or
+`content < extract | distribution | coverage > -h` for more information
 """
 
 
