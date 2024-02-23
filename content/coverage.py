@@ -180,7 +180,7 @@ def main(args):
         args.genomesize,
         n=args.n,
         m=args.m,
-        #min_cov=args.mincoverage,
+        min_cov=args.mincoverage,
         min_length=args.minlength,
         min_quality=args.minquality,
     )
