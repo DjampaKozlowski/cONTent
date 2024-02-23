@@ -18,8 +18,8 @@ def launch_subprocess(cmd, fp_stdout, fp_stderr):
     sub_call = subprocess.Popen(cmd, shell=True,  stdout=subprocess.PIPE)
     stdout, stderr = sub_call.communicate()
     with open(fp_stdout,"w") as out, open(fp_stderr,"w") as err:
-        out.write(str(stdout))
-        err.write(str(stderr))
+        out.write(stdout.decode("utf-8"))
+        err.write(stderr.decode("utf-8"))
 
 def extract_infos_from_fastq(fp_input, fp_output):
     """
@@ -62,9 +62,10 @@ def main(args):
     if not os.path.isdir(output_dir):
         os.makedirs(output_dir, mode=0o755, exist_ok=True)
         
-    output_fpath = os.path.join(output_dir, 
-                                os.path.splitext(os.path.basename(input_fpath))[0] + ".content"
-                                )
+    output_fpath = os.path.join(
+        output_dir, 
+        os.path.splitext(os.path.basename(input_fpath))[0] + ".content"
+    )
 
 
     ### Parse fastq file using the fastq_processor C++ program
