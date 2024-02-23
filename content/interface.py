@@ -29,7 +29,7 @@ def arguments_parser():
     scan_p.add_argument(
         "-i",
         "--inputfilepath",
-        help="input fastq/fastq.gz file path",
+        help="input fastq file path",
         type=str,
         required=True,
     )
