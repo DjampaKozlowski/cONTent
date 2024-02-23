@@ -6,3 +6,5 @@ data
 tmp
 truc.sh
 content/build/
+build/
+dist/
