@@ -17,9 +17,15 @@ def launch_subprocess(cmd, fp_stdout, fp_stderr):
     """
     sub_call = subprocess.Popen(cmd, shell=True,  stdout=subprocess.PIPE)
     stdout, stderr = sub_call.communicate()
-    with open(fp_stdout,"w") as out, open(fp_stderr,"w") as err:
-        out.write(stdout.decode("utf-8"))
-        err.write(stderr.decode("utf-8"))
+
+    if stderr:
+        with open(fp_stderr,"w") as err:
+            err.write(stderr.decode("utf-8"))
+
+    if stdout:
+        with open(fp_stdout,"w") as out:
+            out.write(stdout.decode("utf-8"))
+
 
 def extract_infos_from_fastq(fp_input, fp_output):
     """
