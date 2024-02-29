@@ -26,7 +26,7 @@ def launch_subprocess(cmd, fp_stdout, fp_stderr):
         with open(fp_stderr,"w") as err:
             err.write(stderr.decode("utf-8"))
 
-    if stdout:
+    if stdout and not stdout.decode("utf-8").startswith("Fastq processing complete"):
         with open(fp_stdout,"w") as out:
             out.write(stdout.decode("utf-8"))
 
@@ -67,7 +67,6 @@ def workers(input_fpath: str, outdir: str):
     ### Parse fastq file using the fastq_processor C++ program
     #
     extract_infos_from_fastq(input_fpath, output_fpath)
-    print(input_fpath, output_fpath)
 
 
 def main(args):
