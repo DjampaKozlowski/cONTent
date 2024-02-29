@@ -68,16 +68,15 @@ def workers(input_fpath: str, outdir: str):
     #
     extract_infos_from_fastq(input_fpath, output_fpath)
 
-
+@cmn.time_d
 def main(args):
     print("Starting cONTent extract analysis")
-    start_time = time.time()
 
     ### Set the input/ouput paths
     input_fpath = os.path.abspath(args.inputfilepath)
     output_dir = os.path.abspath(args.outputdirpath)
 
-    threads = cpu_count() if args.threads == 0 else min(args.threads, cpu_count())
+    threads = cmn.number_thread(args.threads)
 
     lst_files = cmn.lst_files(input_fpath, ".fastq")
 
@@ -87,6 +86,3 @@ def main(args):
 
     with Pool(processes=threads) as pool:
         pool.map(partial(workers, outdir= output_dir), lst_files)
-
-    stop_time = time.time()
-    print(f"duration : {np.round(stop_time-start_time, 3)} s")
