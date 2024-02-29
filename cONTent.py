@@ -4,22 +4,23 @@ import numpy as np
 
 def main():
     args = intrf.arguments_parser()
-    if args.sub_prog == "extract":
-        import content.extraction as xtrct
-        xtrct.main(args)
-        
-    elif args.sub_prog == "distrib":
-        import content.distribution as dstrb
 
-        dstrb.main(args.input, args.outdir, args.fraction, args.prefix)
+    match args.sub_prog:
+        case "extract":
+            import content.extraction as xtrct
+            xtrct.main(args)
+
+        case "distrib":
+            import content.distribution as dstrb
+            dstrb.main(args)
         
-    elif args.sub_prog == "coverage":
-        import content.coverage as cvrg
-        cvrg.main(args)
+        case "coverage":
+            import content.coverage as cvrg
+            cvrg.main(args)
         
-    else:
-        print(intrf.PROG_DESCRIPTION)
-        sys.exit()
+        case other:
+            print(intrf.PROG_DESCRIPTION)
+            sys.exit()
 
 if __name__ == "__main__":
     main()
