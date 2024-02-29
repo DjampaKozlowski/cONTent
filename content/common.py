@@ -1,6 +1,6 @@
 import os
-from multiprocessing import cpu_count
 import time
+from multiprocessing import cpu_count
 from numpy import round
 
 
@@ -82,7 +82,7 @@ def number_thread(threads: int) -> int:
 
 
 # Decoration : timer
-def time(fct):
+def time_d(fct):
     def decorated_func(*args, **kwargs):
 
         start = time.time()
@@ -92,3 +92,5 @@ def time(fct):
         end = time.time()
 
         print(f"duration : {round(end-start, 3)} s")
+    
+    return decorated_func
