@@ -1,4 +1,8 @@
 import os
+from multiprocessing import cpu_count
+import time
+from numpy import round
+
 
 def lst_files_in_dir(dpath, ext=None):
     """
@@ -71,3 +75,20 @@ def lst_files(input_path, ext):
         lst_paths = [os.path.abspath(input_path)]
 
     return lst_paths
+
+
+def number_thread(threads: int) -> int:
+    return cpu_count() if threads == 0 else min(threads, cpu_count())
+
+
+# Decoration : timer
+def time(fct):
+    def decorated_func(*args, **kwargs):
+
+        start = time.time()
+
+        fct(*args, **kwargs)
+
+        end = time.time()
+
+        print(f"duration : {round(end-start, 3)} s")
