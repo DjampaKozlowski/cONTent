@@ -3,6 +3,10 @@ import sys
 import subprocess
 import time
 import numpy as np
+from functools import partial
+from multiprocessing import Pool, cpu_count
+
+import content.common as cmn
 
 
 def launch_subprocess(cmd, fp_stdout, fp_stderr):
@@ -54,28 +58,36 @@ def extract_infos_from_fastq(fp_input, fp_output):
         print(f"Can't find {fp_fastq_processor}. Please compile the program and store it in the build repository")
         sys.exit()
 
+def workers(input_fpath: str, outdir: str):
+    output_fpath = os.path.join(
+        outdir, 
+        os.path.splitext(os.path.basename(input_fpath))[0] + ".content"
+    )
+
+    ### Parse fastq file using the fastq_processor C++ program
+    #
+    extract_infos_from_fastq(input_fpath, output_fpath)
+    print(input_fpath, output_fpath)
+
 
 def main(args):
     print("Starting cONTent extract analysis")
     start_time = time.time()
 
     ### Set the input/ouput paths
-    #
     input_fpath = os.path.abspath(args.inputfilepath)
     output_dir = os.path.abspath(args.outputdirpath)
-    
+
+    threads = cpu_count() if args.threads == 0 else min(args.threads, cpu_count())
+
+    lst_files = cmn.lst_files(input_fpath, ".fastq")
+
     ## Create the output directory if it does not exist
     if not os.path.isdir(output_dir):
         os.makedirs(output_dir, mode=0o755, exist_ok=True)
-        
-    output_fpath = os.path.join(
-        output_dir, 
-        os.path.splitext(os.path.basename(input_fpath))[0] + ".content"
-    )
 
+    with Pool(processes=threads) as pool:
+        pool.map(partial(workers, outdir= output_dir), lst_files)
 
-    ### Parse fastq file using the fastq_processor C++ program
-    #
-    extract_infos_from_fastq(input_fpath, output_fpath)
     stop_time = time.time()
     print(f"duration : {np.round(stop_time-start_time, 3)} s")

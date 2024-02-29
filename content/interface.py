@@ -1,4 +1,5 @@
 import argparse
+from multiprocessing import cpu_count
 
 
 PROG_DESCRIPTION = """
@@ -24,13 +25,13 @@ def arguments_parser():
         description="""Parse read library (/!\ SHOULD BE A FASTQ FILE AND NOT A FASTQ.GZ) and for each 
         read extract the read's name, length, and average quality. Save the 
         results as a tab separated file with the following name :
-        '<input_file_name>.content'.""",
+        '<input_file_name>.content'. Can be an directory""",
     )
 
     scan_p.add_argument(
         "-i",
-        "--inputfilepath",
-        help="input fastq file path",
+        "--inputpath",
+        help="input fastq file path or directory where there are fastq",
         type=str,
         required=True,
     )
@@ -45,6 +46,14 @@ def arguments_parser():
                         be overwritten as well as the files it might contain.""",
         type=str,
         required=True,
+    )
+
+    scan_p.add_argument(
+        "-t", 
+        "--threads", 
+        help= f"Number of threads allowed (default all cpus)",
+        type=int,
+        default = cpu_count()
     )
 
     dist_p = subparsers.add_parser(
