@@ -100,6 +100,15 @@ def arguments_parser():
         default=0.01,
     )
 
+    dist_p.add_argument(
+        "-t", 
+        "--threads", 
+        help= f"Number of threads allowed (default all cpus)",
+        type=int,
+        default = cpu_count()
+    )
+
+
     cov_p = subparsers.add_parser(
         "coverage",
         description="""Parse .content files and create a representation of 

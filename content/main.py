@@ -11,7 +11,7 @@ def main():
 
         case "distrib":
             import content.distribution as dstrb
-            dstrb.main(args.input, args.outdir, args.fraction, args.prefix)
+            dstrb.main(args)
         
         case "coverage":
             import content.coverage as cvrg
