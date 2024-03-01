@@ -166,11 +166,10 @@ def main(args):
 
     ### Iterate through every input '.content' file(s) and create a global
     #   dataframe.
-    lst_df = [pd.read_csv(fpath, sep="\t") for fpath in lst_fpath]
 
     ### Create a global dataframe from all the libraries
     #
-    df_glob = pd.concat(lst_df)
+    df_glob = pd.concat([pd.read_csv(fpath, sep="\t") for fpath in lst_fpath])
 
     ### Compute coverage for different values of reads quality and length
     #
