@@ -2,6 +2,7 @@ import os
 import time
 from multiprocessing import cpu_count
 from numpy import round
+import pandas as pd
 
 
 def lst_files_in_dir(dpath, ext=None):
@@ -48,7 +49,29 @@ def lst_content_files(input_path):
     (list) -- a list of file paths. If no '.content' file found, return an
     empty list
     """
-    return lst_files(input_path, ".content")
+    lst_fpath_tmp = lst_files(input_path, ".content")
+    lst_fpath = []
+
+    col_name = ["read_name", "read_length","read_avg_quality"]
+
+    for i in lst_fpath_tmp:
+        df = pd.read_csv(i, sep = "\t", nrows = 10)
+
+        if col_name != df.columns.to_list():
+            print(f"The name of the column of {i} is wrong, it must be : {', '.join(col_name)}. In this order and number")
+            continue
+
+        if not all([
+            pd.api.types.is_integer_dtype(df.read_length),
+            pd.api.types.is_float_dtype(df.read_avg_quality)
+        ]):
+            print(f"The type of the columns {i} of the read_length and read_avg_quality is wrong, it must be an int and float")
+            continue
+        
+        lst_fpath.append(i)
+
+
+    return lst_fpath
 
 def lst_files(input_path, ext):
     """
