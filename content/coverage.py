@@ -139,7 +139,7 @@ class GenomeCoverage:
         #if self.min_cov:
         #    self.coverage = self.coverage[self.coverage.coverage >= self.min_cov]
 
-
+@cmn.time_d
 def main(args):
     """
     Execute the whole analysis.
@@ -148,7 +148,6 @@ def main(args):
     especially to be able to use the functions in a notebook for instance.
     """
     print("Starting cONTent coverage analysis")
-    start_time = time.time()
 
     ### List the files pointed by  args.input
     #
@@ -202,5 +201,4 @@ def main(args):
     df_coverage.to_csv(
         os.path.join(args.outdir, f"Coverage_{args.prefix}.tsv"), sep="\t", index=False
     )
-    stop_time = time.time()
-    print(f"duration : {np.round(stop_time-start_time, 3)} s")
+
